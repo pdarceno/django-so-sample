@@ -25,13 +25,14 @@ SECRET_KEY = '3+cel^y-*)c9_yz+jkr3vd7vx238vwthd-(hdyo1(xcqg+=sgn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
 INSTALLED_APPS = [
-	'polls.apps.PollsConfig',
-	'api.apps.ApiConfig',
+	'sample.apps.SampleConfig',
 	'rest_framework',
 	'corsheaders',
 	
