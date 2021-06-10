@@ -1,5 +1,5 @@
-db.sqlite3
 .env
+db.sqlite3
 sample/logs/__pycache__
 sample/logs/views.debug.log
 sample/__pycache__
