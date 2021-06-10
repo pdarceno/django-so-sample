@@ -1,4 +1,7 @@
 db.sqlite3
+.env
+sample/logs/__pycache__
+sample/logs/views.debug.log
 sample/__pycache__
 sample/migrations/__pycache__
 form/__pycache__

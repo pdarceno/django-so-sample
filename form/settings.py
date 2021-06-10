@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3+cel^y-*)c9_yz+jkr3vd7vx238vwthd-(hdyo1(xcqg+=sgn'
+SECRET_KEY = config('secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -45,8 +46,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 	'corsheaders.middleware.CorsMiddleware',
-
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'form.urls'
+CSRF_COOKIE_SAMESITE = None
 
 TEMPLATES = [
 	{
@@ -125,3 +127,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+SAMPLE_ROOT = 'sample'
+LOGGING_ROOT = os.path.join(SAMPLE_ROOT, 'logs')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'views_log_file': {
+            'class': 'sample.logs.handlers.AppDebugFileHandler',
+            'filename': os.path.join(LOGGING_ROOT, 'views.debug.log'),
+        }
+    },
+    'loggers': {
+        'sample.views': {
+            'handlers': ['views_log_file'],
+            'level': 'DEBUG',
+        }
+    }
+}
